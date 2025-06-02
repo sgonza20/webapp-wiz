@@ -9,8 +9,8 @@ env:
   IMAGE_NAME: ${{ github.repository }}
   AWS_REGION: us-east-1
   AWS_ROLE_ARN: arn:aws:iam::949940714686:role/github-actions-cicd
-  ECR_REPO_NAME: EKS-cluster-dev
-  EKS_CLUSTER_NAME: my-eks-cluster
+  ECR_REPO_NAME: ecr-repository-dev
+  EKS_CLUSTER_NAME: EKS-cluster-dev
 
 jobs:
   deploy:
