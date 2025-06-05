@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: webapp
-  labels:
-    app: webapp
 spec:
   replicas: 2
   selector:
@@ -14,8 +12,26 @@ spec:
       labels:
         app: webapp
     spec:
+      serviceAccountName: webapp-sa
       containers:
       - name: webapp
         image: ecr-repository-dev:latest
         ports:
         - containerPort: 8080
+        volumeMounts:
+        - name: secrets-store-inline
+          mountPath: "/mnt/secrets-store"
+          readOnly: true
+        env:
+        - name: SECRET_KEY
+          valueFrom:
+            secretKeyRef:
+              name: tasky-secret-k8s
+              key: SECRET_KEY
+      volumes:
+      - name: secrets-store-inline
+        csi:
+          driver: secrets-store.csi.k8s.io
+          readOnly: true
+          volumeAttributes:
+            secretProviderClass: "tasky-secrets"
