@@ -8,7 +8,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
   AWS_REGION: us-east-1
-  AWS_ROLE_ARN: arn:aws:iam::949940714686:role/github-actions-cicd
+  AWS_ROLE_ARN: arn:aws:iam::920372990505:role/github-actions-cicd
   ECR_REPO_NAME: ecr-repository-dev
   EKS_CLUSTER_NAME: EKS-cluster-dev
 
