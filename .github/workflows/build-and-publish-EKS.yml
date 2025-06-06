@@ -72,7 +72,7 @@ jobs:
             --create-namespace \
             --set syncSecret.enabled=true \
             --set enableSecretRotation=true \
-            --set enableSecretProviderClassPodStatus=true \
+            --set enableSecretProviderClassPodStatus=true
         else
           echo "Secrets Store CSI Driver already installed"
         fi
