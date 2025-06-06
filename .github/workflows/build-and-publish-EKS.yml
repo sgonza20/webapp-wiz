@@ -54,8 +54,7 @@ jobs:
             --namespace kube-system \
             --set controller.serviceAccount.create=false \
             --set controller.serviceAccount.name=ebs-csi-controller-sa \
-            --set node.serviceAccount.name=ebs-csi-node-sa \
-            --wait
+            --set node.serviceAccount.name=ebs-csi-node-sa
         else
           echo "EBS CSI Driver is already installed."
         fi
