@@ -59,6 +59,32 @@ jobs:
           echo "EBS CSI Driver is already installed."
         fi
 
+    - name: Add Secrets Store CSI Driver Helm repo
+      run: |
+        helm repo add secrets-store-csi-driver https://kubernetes-sigs.github.io/secrets-store-csi-driver/charts
+        helm repo update
+
+    - name: Install Secrets Store CSI Driver if not installed
+      run: |
+        if ! helm list -n kube-system | grep -q csi-secrets-store; then
+          helm upgrade --install csi-secrets-store secrets-store-csi-driver/secrets-store-csi-driver \
+            --namespace kube-system \
+            --create-namespace \
+            --set syncSecret.enabled=true \
+            --set enableSecretRotation=true \
+            --set enableSecretProviderClassPodStatus=true \
+        else
+          echo "Secrets Store CSI Driver already installed"
+        fi
+
+    - name: Install AWS provider for Secrets Store CSI Driver if not installed
+      run: |
+        if ! kubectl get daemonset -n kube-system | grep -q secrets-store-csi-driver-provider-aws; then
+          kubectl apply -f https://raw.githubusercontent.com/aws/secrets-store-csi-driver-provider-aws/main/deployment/aws-provider-installer.yaml
+        else
+          echo "AWS provider for Secrets Store CSI Driver already installed"
+        fi
+
     - name: Deploy to EKS
       run: |
         kubectl apply -f k8/
