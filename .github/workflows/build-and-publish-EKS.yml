@@ -44,6 +44,22 @@ jobs:
       run: |
         aws eks update-kubeconfig --region ${{ env.AWS_REGION }} --name ${{ env.EKS_CLUSTER_NAME }}
 
+    - name: Ensure EBS CSI Driver is installed
+      run: |
+        if ! kubectl get csidriver ebs.csi.aws.com >/dev/null 2>&1; then
+          echo "EBS CSI Driver not found. Installing..."
+          helm repo add aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+          helm repo update
+          helm upgrade --install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver \
+            --namespace kube-system \
+            --set controller.serviceAccount.create=false \
+            --set controller.serviceAccount.name=ebs-csi-controller-sa \
+            --set node.serviceAccount.name=ebs-csi-node-sa \
+            --wait
+        else
+          echo "EBS CSI Driver is already installed."
+        fi
+
     - name: Deploy to EKS
       run: |
         kubectl apply -f k8/
