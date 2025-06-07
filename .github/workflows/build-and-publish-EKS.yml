@@ -107,9 +107,12 @@ jobs:
           echo "AWS Load Balancer Controller already installed"
         fi
 
+    - name: Deploy to EKS
+      run: |
+        kubectl apply -f k8/
+
     - name: Deploy to EKS with Git SHA image
       env:
         GIT_SHA: ${{ github.sha }}
       run: |
-        # Replace the placeholder in deployment YAML with actual SHA
-        envsubst < k8/deployment.yml | kubectl apply -f k8/
+        envsubst < k8/deployment.yml | kubectl apply -f -
