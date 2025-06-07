@@ -35,9 +35,11 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
-    - name: Build, Tag and Push Docker Image
+    - name: Build, Tag, and Push Docker Image with Git SHA
+      env:
+        IMAGE_TAG: ${{ github.sha }}
       run: |
-        IMAGE="${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO_NAME }}:latest"
+        IMAGE="${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPO_NAME }}:${IMAGE_TAG}"
         docker build -t $IMAGE .
         docker push $IMAGE
 
@@ -105,6 +107,9 @@ jobs:
           echo "AWS Load Balancer Controller already installed"
         fi
 
-    - name: Deploy to EKS
+    - name: Deploy to EKS with Git SHA image
+      env:
+        GIT_SHA: ${{ github.sha }}
       run: |
-        kubectl apply -f k8/
+        # Replace the placeholder in deployment YAML with actual SHA
+        envsubst < k8/deployment.yml | kubectl apply -f k8/

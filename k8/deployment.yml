@@ -15,7 +15,7 @@ spec:
       serviceAccountName: webapp-sa
       containers:
       - name: webapp
-        image: 920372990505.dkr.ecr.us-east-1.amazonaws.com/ecr-repository-dev:latest
+        image: 920372990505.dkr.ecr.us-east-1.amazonaws.com/ecr-repository-dev:${GIT_SHA}
         ports:
         - containerPort: 8080
         volumeMounts:
@@ -29,7 +29,7 @@ spec:
               name: tasky-secret-k8s
               key: SECRET_KEY
         - name: MONGODB_URI
-          value: "mongodb://adminuser:StrongPassword123@54.173.196.252:27017/admin"
+          value: "mongodb://adminuser:StrongPassword123@10.0.53.116:27017/admin"
       volumes:
       - name: secrets-store-inline
         csi:
