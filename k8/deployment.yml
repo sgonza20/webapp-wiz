@@ -29,7 +29,7 @@ spec:
               name: tasky-secret-k8s
               key: SECRET_KEY
         - name: MONGODB_URI
-          value: "mongodb://adminuser:StrongPassword123@10.0.53.116:27017/admin"
+          value: "mongodb://adminuser:StrongPassword123@10.0.0.147:27017/admin"
       volumes:
       - name: secrets-store-inline
         csi:
