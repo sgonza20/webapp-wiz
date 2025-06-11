@@ -14,7 +14,7 @@ env:
   VPC_ID: vpc-056809c7d237bb462
 
 jobs:
-  deploy:
+  Build-Scan-Publish:
     runs-on: ubuntu-latest
 
     permissions:
