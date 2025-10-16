@@ -15,7 +15,7 @@ spec:
       serviceAccountName: webapp-sa
       containers:
       - name: webapp
-        image: 920372990505.dkr.ecr.us-east-1.amazonaws.com/ecr-repository-dev:${GIT_SHA}
+        image: 008971668581.dkr.ecr.us-east-1.amazonaws.com/ecr-repository-dev:${GIT_SHA}
         ports:
         - containerPort: 8080
         volumeMounts:
