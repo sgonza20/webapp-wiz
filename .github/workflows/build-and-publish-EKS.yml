@@ -7,15 +7,15 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-  AWS_REGION: us-east-1
-  AWS_ROLE_ARN: arn:aws:iam::920372990505:role/github-actions-cicd
+  AWS_REGION: us-east-2
+  AWS_ROLE_ARN: arn:aws:iam::008971668581:role/github-actions-cicd
   ECR_REPO_NAME: ecr-repository-dev
   EKS_CLUSTER_NAME: EKS-cluster-dev
-  VPC_ID: vpc-056809c7d237bb462
+  VPC_ID: vpc-0dfc7ec61c18f306d
 
 jobs:
   Build-Scan-Publish:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  
 
     permissions:
       id-token: write
