@@ -34,6 +34,6 @@ func main() {
 
 	router.Run(":8080")
 
-	fmt.Println("Hello World!")
+	fmt.Println("My Password is: Hello World!")
 
 }
